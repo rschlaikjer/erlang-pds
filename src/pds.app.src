@@ -1,0 +1,11 @@
+{application, pds, [
+    {description, "Planetary Data System"},
+    {vsn, "1"},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib
+    ]},
+    {env, []},
+    {modules, []}
+]}.
