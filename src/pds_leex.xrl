@@ -3,23 +3,13 @@ Definitions.
 D = [0-9]
 L = [a-zA-Z_]
 LABEL = ({L}|{D}|:)
-SAFESYM = [_\-.:+]
-SYM = [_\-.:/*+\[\]'#,()&;@$=?]
 WHITESPACE = [\s\t\n\r]
-ALPHA = ({U}|{L})
-ALNUM = ({ALPHA}|{D})
-ALSYM = ({ALNUM}|{SYM}|{WHITESPACE})
-TAGCHAR = ({ALNUM}|{SAFESYM})
-START = "/*"
-END = "*/"
-SIMPLE = [^*]
-COMPLEX = "*"/[^/]
 
 Rules.
 
 /\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/ : {token, {comment, TokenChars}}.
 L?\"(\\.|[^\\"])*\" : {token, {string, lists:sublist(TokenChars, 2, TokenLen-2)}}.
-\^{ALPHA}+ : {token, {pointer, lists:sublist(TokenChars, 2, TokenLen-1)}}.
+\^{L}+ : {token, {pointer, lists:sublist(TokenChars, 2, TokenLen-1)}}.
 L?\<(\\.|[^\\>])*\> : {token, {unit, lists:sublist(TokenChars, 2, TokenLen-2)}}.
 {WHITESPACE}+ : skip_token.
 {LABEL}+        : {token, {label, string:strip(TokenChars)}}.
