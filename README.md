@@ -15,17 +15,22 @@ FOOTPRINT_POINT_LATITUDE               = (4.217, 3.6209, 3.6514, 4.2473)
 FOOTPRINT_POINT_LONGITUDE              = (37.6944, 37.5729, 37.4228, 37.544)
 ```
 
-We can convert this to a proplist using `pds:parse/1`.
+We can convert this to a document record using `pds:parse/1`.
 
 ```
 {ok, Bin} = file:read_file("FRAME_2017_H2.LBL").
-{ok, Data} = pds:parse(Bin).
-Lat = proplists:get_value("FOOTPRINT_POINT_LATITUDE", Data).
-Lon = proplists:get_value("FOOTPRINT_POINT_LONGITUDE", Data).
+{ok, Doc} = pds:parse(Bin).
+Lat = proplists:get_value("FOOTPRINT_POINT_LATITUDE", Doc#pds_document.properties).
+Lon = proplists:get_value("FOOTPRINT_POINT_LONGITUDE", Doc#pds_document.properties).
 {Lat, Lon}.
 > {{4.2473,3.6514,3.6209,4.217},
 >     {37.544,37.4228,37.5729,37.6944}}
 ```
+
+Document records contain three lists:
+- `properties`, any top-level key-value pair in the document
+- `pointers`, a proplist of pointer name to file name
+- `objects`, a proplist of object name to a second proplist of object values.
 
 ### Type conversions
 
