@@ -17,7 +17,7 @@ L?\<(\\.|[^\\>])*\> : {token, {unit, lists:sublist(TokenChars, 2, TokenLen-2)}}.
 {D}+-{D}+-{D}+ : {token, {date, parse_date(TokenChars)}}.
 {D}+-{D}+-{D}+T{D}+:{D}+:{D}+.{D}+ : {token, {timestamp, parse_timestamp(TokenChars)}}.
 {D}+ :   {token, {integer, list_to_integer(TokenChars)}}.
--*{D}*\.{D}+((E|e)(\+|\-)?{D}+)? : {token, {float, parse_float(TokenChars)}}.
+-?{D}*\.{D}+((E|e)(\+|\-)?{D}+)? : {token, {float, parse_float(TokenChars)}}.
 \( : {token, begin_tuple}.
 \) : {token, end_tuple}.
 , : {token, tuple_separator}.
